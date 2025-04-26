@@ -114,6 +114,19 @@ def delete_person(var_name):
     # If no person with the given ID is found, return a JSON response with a message and HTTP status code 404 (Not Found)
     return {"message": "Person not found"}, 404
 
+# Create POST/person
+# Define a route for root "/person"
+@app.route("/person", methods=['POST'])
+def add_by_uuid():
+    new_person = request.json
+    if not new_person:
+        return {"message": "Invalid input parameter"}, 422
+    # code to validate new_person ommited
+    try:
+        data.append(new_person)
+    except NameError:
+        return {"message": "data not defined"}, 500
+    return {"message": f"{new_person['id']}"}, 200
 data = [
     {
         "id": "3b58aade-8415-49dd-88db-8d7bce14932a",
