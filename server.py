@@ -52,6 +52,7 @@ def get_data():
         # Handle the case where 'data' is not defined
         # Return a JSON response with 404 Not found status code
         return {"message" : "Data not found"}, 404
+# Define a route for "/name_search" URL
 @app.route("/name_search")
 def name_search():
     """Find a person in the database.
@@ -72,6 +73,45 @@ def name_search():
             # If a match is found, return the person as a JSON response with a 200 OK status code
             return person
     # If no match is found, return a JSON response with a message indicating the person was not found and a 404 Not Found status code
+    return {"message": "Person not found"}, 404
+
+# Define a route for "/count" URL
+@app.route("/count")
+def count():
+    try:
+        # Attempt to return a JSON response with the count of items in 'data'
+        # Replace {insert code to find length of data} with len(data) to get the length of the 'data' collection
+        return {"data count" : len(data)}, 200
+    except NameError:
+        # If 'data' is not defined and raises a NameError
+        # Return a JSON response with a message and a 500 Internal Server Error status code
+        return {"message" : "data not defined"}
+
+
+# Create GET/person/id endpoint
+# Define a route for root "/person/<var_name>"
+@app.route("/person/<var_name>")
+def find_by_uuid(var_name):
+    # Iterate through the 'data' list to search for a person with a matching ID
+    for person in data:
+        # Check if the 'id' field of the person matches the 'var_name' parameter
+        if person["id"] == str(var_name):
+            # Return the person as a JSON response if a match is found
+            return person
+    # Return a JSON response with a message and a 404 Not Found status code if no matching person is found
+    return {"message": "Person not found"}, 404
+
+# Create DELETE/person/id endpoint
+# Define a route for root "/person/<var_name>"
+@app.route("/person/<var_name>", methods=['DELETE'])
+def delete_person(var_name):
+    for person in data:
+        if person["id"] == str(var_name):
+            # Remove the person from the data list
+            data.remove(person)
+            # Return a JSON response with a message and HTTP status code 200 (OK)
+            return {"message": "Person with ID deleted"}, 200
+    # If no person with the given ID is found, return a JSON response with a message and HTTP status code 404 (Not Found)
     return {"message": "Person not found"}, 404
 
 data = [
