@@ -127,6 +127,17 @@ def add_by_uuid():
     except NameError:
         return {"message": "data not defined"}, 500
     return {"message": f"{new_person['id']}"}, 200
+
+
+# add a custom error handler 
+@app.errorhandler(404)
+def api_not_found(error):
+    # This function is a custom error handler for 404 Not Found errors
+    # It is triggered whenever a 404 error occurs within the Flask application
+    return {"message": "API not found"}, 404
+
+
+
 data = [
     {
         "id": "3b58aade-8415-49dd-88db-8d7bce14932a",
