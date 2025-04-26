@@ -11,4 +11,4 @@ app = Flask(__name__)
 def index():
     # function thaat handles requests to the root URL
     # return JSON response
-    return jsonify({"hello World!"})
+    return jsonify({"message": "hello World!"})
